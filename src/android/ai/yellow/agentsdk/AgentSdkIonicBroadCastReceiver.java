@@ -10,6 +10,7 @@ import org.apache.cordova.CallbackContext;
 import org.apache.cordova.PluginResult;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import ai.yellow.agentsdk.utils.Utils;
@@ -47,6 +48,11 @@ public class AgentSdkIonicBroadCastReceiver extends YmMessageReceiver {
       errorPluginResult.setKeepCallback(true);
       Log.d("YmLog", "Event sending failed");
       this.callBackContext.sendPluginResult(errorPluginResult);
+      try {
+        super.clone();
+      } catch (CloneNotSupportedException cloneNotSupportedException) {
+        cloneNotSupportedException.printStackTrace();
+      }
 
     }
   }
@@ -75,6 +81,35 @@ public class AgentSdkIonicBroadCastReceiver extends YmMessageReceiver {
       Log.d("YmLog", "Event sending failed");
       this.callBackContext.sendPluginResult(successPluginResult);
 
+    }
+  }
+
+  public void sendNotification(JSONArray args, CallbackContext callbackContext) {
+    try {
+
+      String title = args.getString(0);
+      String body = args.getString(1);
+      JSONObject data = args.getJSONObject(2);
+      String eventType = args.getString(3);
+      Log.d("YmLog", args.toString());
+
+      if (eventType.equals(Utils.TicketCreateEvent)) {
+        Log.d("YmLog", "Sending ticket create notification");
+        YmTicketCreateModel ymTicketCreateModel = Utils.gson.fromJson(data.toString(), YmTicketCreateModel.class);
+        super.onTicketCreateEventReceived(title, body, ymTicketCreateModel);
+
+      } else if (eventType.equals(Utils.TicketUpdateEvent)) {
+        Log.d("YmLog", "Sending ticket update notification");
+        YmXMPPMessageModel ymTicketUpdateModel = Utils.gson.fromJson(data.toString(), YmXMPPMessageModel.class);
+        Log.d("YmLog", ymTicketUpdateModel.getData().toString());
+        super.onTicketUpdateEventReceived(title, body, ymTicketUpdateModel);
+
+      }
+
+      Utils.successHelper(callbackContext);
+
+    } catch (Exception e) {
+      Utils.errorHelper(e, callbackContext);
     }
   }
 

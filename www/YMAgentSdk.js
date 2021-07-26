@@ -11,8 +11,12 @@ const AgentSdk =
         exec(null, null, 'YMAgentSdk', 'setFirebaseDeviceToken', [token]);
     },
 
-    setLocalReceiver: (success, failure) => {
-        exec(success, failure, 'YMAgentSdk', 'setLocalReceiver', []);
+    handleBackgroundNotification: (data) => {
+        exec(null, null, 'YMAgentSdk', 'handleBackgroundNotification', [data]);
+    },
+
+    setLocalReceiver: (eventCallBack, failureCallBack) => {
+        exec(eventCallBack, failureCallBack, 'YMAgentSdk', 'setLocalReceiver', []);
     },
 
     setUpdatedEvent: (success, failure, title, body, model, eventType) => {
@@ -31,28 +35,16 @@ const AgentSdk =
         exec(success, failure, 'YMAgentSdk', 'getAgentStatus', []);
     },
 
-    handleBackgroundNotification: (data) => {
-        exec(null, null, 'YMAgentSdk', 'handleBackgroundNotification', [data]);
-    },
-
     logout: (success, failure) => {
         exec(success, failure, 'YMAgentSdk', 'logout', []);
     },
 
-    getOverviewFragment: (success, failure) => {
-        exec(success, failure, 'YMAgentSdk', 'getOverviewFragment', []);
-    },
-
-    startOverviewActivity: (success, failure) => {
+    startOverviewScreen: (success, failure) => {
         console.log("Starting overview activity");
         exec(success, failure, 'YMAgentSdk', 'startOverviewActivity', []);
     },
 
-    getMyChatsFragment: (success, failure) => {
-        exec(success, failure, 'YMAgentSdk', 'getMyChatsFragment', []);
-    },
-
-    startMyChatActivity: (success, failure) => {
+    startMyChatScreen: (success, failure) => {
         exec(success, failure, 'YMAgentSdk', 'startMyChatActivity', []);
     },
 }

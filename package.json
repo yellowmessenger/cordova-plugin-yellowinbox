@@ -1,6 +1,6 @@
 {
   "name": "cordova-plugin-YMAgentSdk",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "",
   "cordova": {
     "id": "cordova-plugin-YMAgentSdk",
@@ -16,12 +16,5 @@
   ],
   "author": "Purushottam",
   "license": "ISC",
-  "engines": {
-    "cordovaDependencies": {
-      "0.1.0:": {
-        "cordova-plugin-androidx": {},
-        "cordova-plugin-androidx-adapter": ">=3.0.0"
-      }
-    }
-  }
+  "engines": {}
 }

@@ -7,6 +7,7 @@
         <clobbers target="cordova.plugins.YMAgentSdk" />
     </js-module>
     <platform name="android">
+        <dependency id="cordova-plugin-androidx-adapter"/>
         <config-file parent="/*" target="res/xml/config.xml">
             <feature name="YMAgentSdk">
                 <param name="android-package" value="ai.yellow.agentsdk.AgentSdkModule" />
@@ -26,7 +27,6 @@
         <!-- Source java files -->
         <source-file src="src/android/ai/yellow/agentsdk/AgentSdkModule.java" target-dir="src/ai/yellow/agentsdk" />
         <source-file src="src/android/ai/yellow/agentsdk/AgentSdkIonicBroadCastReceiver.java" target-dir="src/ai/yellow/agentsdk" />
-        <source-file src="src/android/ai/yellow/agentsdk/AgentSdkService.java" target-dir="src/ai/yellow/agentsdk" />
 
         <!-- Utils java files -->
         <source-file src="src/android/ai/yellow/agentsdk/utils/Utils.java" target-dir="src/ai/yellow/agentsdk/utils" />

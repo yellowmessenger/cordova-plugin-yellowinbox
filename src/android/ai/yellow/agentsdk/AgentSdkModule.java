@@ -8,10 +8,8 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ProcessLifecycleOwner;
 
-import com.google.gson.reflect.TypeToken;
 import com.yellowmessenger.YellowInbox;
 import com.yellowmessenger.YmAppProcessLifeCycleListener;
-import com.yellowmessenger.YmMessageReceiver;
 import com.yellowmessenger.datalayer.vo.Resource;
 import com.yellowmessenger.datalayer.vo.Roles;
 import com.yellowmessenger.datalayer.vo.User;
@@ -37,8 +35,9 @@ import ai.yellow.agentsdk.utils.Utils;
  */
 public class AgentSdkModule extends CordovaPlugin {
 
-  Context ionicContext;
-  Activity ionicActivity;
+  private Context ionicContext;
+  private Activity ionicActivity;
+  private AgentSdkIonicBroadCastReceiver ymMessageReceiver;
 
   @Override
   public void onStart() {
@@ -200,34 +199,13 @@ public class AgentSdkModule extends CordovaPlugin {
   private void setLocalReceiver(JSONArray args, CallbackContext callbackContext) {
     Log.d("YmLog", "attached local listener");
 
-    AgentSdkIonicBroadCastReceiver ymMessageReceiver = new AgentSdkIonicBroadCastReceiver(callbackContext);
+    ymMessageReceiver = new AgentSdkIonicBroadCastReceiver(callbackContext);
     YellowInbox.setLocalReceiver(ymMessageReceiver);
 
   }
 
   private void setUpdatedEvent(JSONArray args, CallbackContext callbackContext) {
-    try {
-
-      String title = args.getString(0);
-      String body = args.getString(1);
-      JSONObject data = args.getJSONObject(2);
-      String eventType = args.getString(3);
-      Log.d("YmLog", args.toString());
-      YmMessageReceiver receiver = new YmMessageReceiver();
-
-      if (eventType.equals(Utils.TicketCreateEvent)) {
-        YmTicketCreateModel ymTicketCreateModel = Utils.gson.fromJson(data.toString(), YmTicketCreateModel.class);
-        receiver.onTicketCreateEventReceived(title, body, ymTicketCreateModel);
-      } else if (eventType.equals(Utils.TicketUpdateEvent)) {
-        YmXMPPMessageModel ymTicketUpdateModel = Utils.gson.fromJson(data.toString(), YmXMPPMessageModel.class);
-        receiver.onTicketUpdateEventReceived(title, body, ymTicketUpdateModel);
-      }
-
-      Utils.successHelper(callbackContext);
-
-    } catch (Exception e) {
-      Utils.errorHelper(e, callbackContext);
-    }
+    ymMessageReceiver.sendNotification(args, callbackContext);
   }
 
   private void changeBot(JSONArray args, CallbackContext callbackContext) {
