@@ -4,8 +4,7 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.yellowmessenger.datalayer.vo.Roles;
-import com.yellowmessenger.datalayer.vo.User;
+import com.yellowmessenger.datalayer.vo.AgentModel;
 
 import org.apache.cordova.CallbackContext;
 import org.json.JSONObject;
@@ -23,7 +22,10 @@ public class Utils {
   public static Type mapStringObjectType = new TypeToken<Map<String, Object>>() {
   }.getType();
 
-  public static void errorHelper(Exception exception, CallbackContext callbackContext) {
+  public static Type listAgentModelType = new TypeToken<List<AgentModel>>() {
+  }.getType();
+
+  public static void genericErrorHelper(Exception exception, CallbackContext callbackContext) {
     Log.e("YmLog", "Failure", exception);
     try {
       String error = exception.getMessage();
@@ -43,7 +45,25 @@ public class Utils {
 
   }
 
-  public static void successHelper(CallbackContext callbackContext) {
+  public static void sdkErrorHelper(String error, CallbackContext callbackContext) {
+    Log.d("YmLog", error);
+    try {
+
+      JSONObject errorJson = new JSONObject();
+      errorJson.put("success", false);
+      errorJson.put("error", error);
+      errorJson.put("stackTrace", new JSONObject());
+      callbackContext.error(errorJson);
+
+    } catch (Exception e) {
+
+      callbackContext.error("Error");
+
+    }
+
+  }
+
+  public static void genericSuccessHelper(CallbackContext callbackContext) {
     Log.d("YmLog", "Success");
     callbackContext.success();
 

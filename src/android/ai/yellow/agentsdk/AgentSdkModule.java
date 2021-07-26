@@ -10,12 +10,11 @@ import androidx.lifecycle.ProcessLifecycleOwner;
 
 import com.yellowmessenger.YellowInbox;
 import com.yellowmessenger.YmAppProcessLifeCycleListener;
+import com.yellowmessenger.datalayer.vo.AgentModel;
 import com.yellowmessenger.datalayer.vo.Resource;
 import com.yellowmessenger.datalayer.vo.Roles;
 import com.yellowmessenger.datalayer.vo.User;
 import com.yellowmessenger.ui.vo.YmAgentStatus;
-import com.yellowmessenger.ui.xmpp.model.YmTicketCreateModel;
-import com.yellowmessenger.ui.xmpp.model.YmXMPPMessageModel;
 
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
@@ -105,6 +104,11 @@ public class AgentSdkModule extends CordovaPlugin {
         startMyChatActivity(args, callbackContext);
         return true;
       }
+      case "getAgents": {
+        Log.d("YmLog", "Getting agent status");
+        getAgents(args, callbackContext);
+        return true;
+      }
 
     }
     return false;
@@ -156,14 +160,12 @@ public class AgentSdkModule extends CordovaPlugin {
           String userId = args.getString(1);
           String botId = args.getString(2);
 
-          ProcessLifecycleOwner.get().getLifecycle().addObserver(new YmAppProcessLifeCycleListener());
-
           YellowInbox.initInternal(ionicContext, botId, getInternalData(botId, userId, apiKey),
               "ai.yellow.supportagent");
-          Utils.successHelper(callbackContext);
+          Utils.genericSuccessHelper(callbackContext);
 
         } catch (Exception e) {
-          Utils.errorHelper(e, callbackContext);
+          Utils.genericErrorHelper(e, callbackContext);
         }
       }
     });
@@ -187,11 +189,11 @@ public class AgentSdkModule extends CordovaPlugin {
 
       String token = args.getString(0);
       YellowInbox.setFirebaseDeviceToken(token);
-      Utils.successHelper(callbackContext);
+      Utils.genericSuccessHelper(callbackContext);
 
     } catch (Exception e) {
 
-      Utils.errorHelper(e, callbackContext);
+      Utils.genericErrorHelper(e, callbackContext);
 
     }
   }
@@ -218,11 +220,11 @@ public class AgentSdkModule extends CordovaPlugin {
           int subscriptionId = args.getInt(1);
 
           YellowInbox.changeBot(botId, subscriptionId, "ai.yellow.supportagent");
-          Utils.successHelper(callbackContext);
+          Utils.genericSuccessHelper(callbackContext);
 
         } catch (Exception e) {
 
-          Utils.errorHelper(e, callbackContext);
+          Utils.genericErrorHelper(e, callbackContext);
 
         }
       }
@@ -262,7 +264,7 @@ public class AgentSdkModule extends CordovaPlugin {
                       callbackContext.success();
                       break;
                     case ERROR:
-                      callbackContext.error(resource.getMessage());
+                      Utils.sdkErrorHelper(resource.getMessage(), callbackContext);
                       break;
                     case LOADING:
                       break;
@@ -272,7 +274,7 @@ public class AgentSdkModule extends CordovaPlugin {
 
         } catch (Exception e) {
 
-          Utils.errorHelper(e, callbackContext);
+          Utils.genericErrorHelper(e, callbackContext);
 
         }
       }
@@ -294,7 +296,7 @@ public class AgentSdkModule extends CordovaPlugin {
                   callbackContext.success(ymAgentStatusResource.getData().toString());
                   break;
                 case ERROR:
-                  callbackContext.error(ymAgentStatusResource.getMessage());
+                  Utils.sdkErrorHelper(ymAgentStatusResource.getMessage(), callbackContext);
                   break;
                 case LOADING:
                   break;
@@ -304,7 +306,7 @@ public class AgentSdkModule extends CordovaPlugin {
 
         } catch (Exception e) {
 
-          Utils.errorHelper(e, callbackContext);
+          Utils.genericErrorHelper(e, callbackContext);
 
         }
       }
@@ -325,11 +327,11 @@ public class AgentSdkModule extends CordovaPlugin {
         try {
 
           YellowInbox.logout();
-          Utils.successHelper(callbackContext);
+          Utils.genericSuccessHelper(callbackContext);
 
         } catch (Exception e) {
 
-          Utils.errorHelper(e, callbackContext);
+          Utils.genericErrorHelper(e, callbackContext);
 
         }
       }
@@ -341,10 +343,10 @@ public class AgentSdkModule extends CordovaPlugin {
     try {
 
       Fragment overViewFragment = YellowInbox.getOverviewFragment();
-      Utils.successHelper(callbackContext);
+      Utils.genericSuccessHelper(callbackContext);
 
     } catch (Exception e) {
-      Utils.errorHelper(e, callbackContext);
+      Utils.genericErrorHelper(e, callbackContext);
     }
   }
 
@@ -356,10 +358,10 @@ public class AgentSdkModule extends CordovaPlugin {
         try {
 
           YellowInbox.startOverviewActivity(ionicActivity);
-          Utils.successHelper(callbackContext);
+          Utils.genericSuccessHelper(callbackContext);
 
         } catch (Exception e) {
-          Utils.errorHelper(e, callbackContext);
+          Utils.genericErrorHelper(e, callbackContext);
         }
       }
     });
@@ -369,7 +371,7 @@ public class AgentSdkModule extends CordovaPlugin {
     try {
       Fragment myChatsFragment = YellowInbox.getMyChatsFragment();
     } catch (Exception e) {
-      Utils.errorHelper(e, callbackContext);
+      Utils.genericErrorHelper(e, callbackContext);
     }
   }
 
@@ -381,12 +383,46 @@ public class AgentSdkModule extends CordovaPlugin {
         try {
 
           YellowInbox.startMyChatActivity(ionicActivity);
-          Utils.successHelper(callbackContext);
+          Utils.genericSuccessHelper(callbackContext);
 
         } catch (Exception e) {
 
-          Utils.errorHelper(e, callbackContext);
+          Utils.genericErrorHelper(e, callbackContext);
 
+        }
+      }
+    });
+  }
+
+  private void getAgents(JSONArray args, CallbackContext callbackContext) {
+    ionicActivity.runOnUiThread(new Runnable() {
+      @Override
+      public void run() {
+
+        try {
+          YellowInbox.getAgents().observe(ProcessLifecycleOwner.get(), new Observer<Resource<List<AgentModel>>>() {
+            @Override
+            public void onChanged(Resource<List<AgentModel>> agentsResource) {
+              switch (agentsResource.getStatus()) {
+                case SUCCESS:
+                  try {
+                    callbackContext
+                        .success(new JSONArray(Utils.gson.toJson(agentsResource.getData(), Utils.listAgentModelType)));
+                  } catch (Exception e) {
+                    Utils.genericErrorHelper(e, callbackContext);
+                  }
+                  break;
+                case ERROR:
+                  Utils.sdkErrorHelper(agentsResource.getMessage(), callbackContext);
+                  break;
+                case LOADING:
+                  break;
+              }
+            }
+          });
+        } catch (Exception e) {
+
+          Utils.genericErrorHelper(e, callbackContext);
         }
       }
     });

@@ -47,6 +47,10 @@ const AgentSdk =
     startMyChatScreen: (success, failure) => {
         exec(success, failure, 'YMAgentSdk', 'startMyChatActivity', []);
     },
+
+    getAgents: (success, failure) => {
+        exec(success, failure, 'YMAgentSdk', 'getAgents', []);
+    }
 }
 
 module.exports = AgentSdk

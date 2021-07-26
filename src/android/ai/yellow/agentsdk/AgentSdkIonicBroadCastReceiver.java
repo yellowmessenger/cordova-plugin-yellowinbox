@@ -106,10 +106,10 @@ public class AgentSdkIonicBroadCastReceiver extends YmMessageReceiver {
 
       }
 
-      Utils.successHelper(callbackContext);
+      Utils.genericSuccessHelper(callbackContext);
 
     } catch (Exception e) {
-      Utils.errorHelper(e, callbackContext);
+      Utils.genericErrorHelper(e, callbackContext);
     }
   }
 
