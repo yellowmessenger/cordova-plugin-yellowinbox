@@ -30,7 +30,7 @@ cordova.plugins.YMAgentSdk.init(
 
   - value: `String` - "OK"
 
-- failureCallBack :function (errorJson)
+- failureCallBack :`function (errorJson)`
 
   - errorJson: `Object` -
 
@@ -78,9 +78,9 @@ cordova.plugins.YMAgentSdk.startOverviewScreen(
 cordova.plugins.YMAgentSdk.startMyChatScreen(successCallBack, failureCallBack);
 ```
 
-- successCallBack :`function (value)`
+- successCallBack :`function (successResult)`
 
-  - value: `String` - "OK"
+  - successResult: `String` - "OK"
 
 - failureCallBack :`function (errorJson)`
 
@@ -108,7 +108,7 @@ Device token can be set using `setFirebaseDeviceToken` method. Pass `fcmToken` a
 cordova.plugins.YMAgentSdk.setFirebaseDeviceToken(token);
 ```
 
-token: `String`
+- token: `String`
 
 Note: Firebase service account key is required to send notifications. You can share the service account key with us. More info [here](https://developers.google.com/assistant/engagement/notifications#get_a_service_account_key)
 
@@ -122,7 +122,7 @@ cordova.plugins.YMAgentSdk.handleBackgroundNotification(
 );
 ```
 
-backgroundNotificationData: `Object`
+- backgroundNotificationData: `Object`
 
 ### Local notifications
 
@@ -165,11 +165,11 @@ cordova.plugins.YMAgentSdk.setUpdatedEvent(
 );
 ```
 
-- successCallBack :`function (value)`
+- successCallBack :`function (successResult)`
 
-  - value: `String` - "OK"
+  - successResult: `String` - "OK"
 
-  failureCallBack :function (errorJson)
+  failureCallBack :`function (errorJson)`
 
   - errorJson: `Object` -
 
@@ -194,11 +194,11 @@ cordova.plugins.YMAgentSdk.changeBot(
 );
 ```
 
-- successCallBack : `function (value)`
+- successCallBack : `function (successResult)`
 
-  - value: `String` - "OK"
+  - successResult: `String` - "OK"
 
-- failureCallBack :function (errorJson)
+- failureCallBack :`function (errorJson)`
 
   - errorJson: `Object` -
 
@@ -225,11 +225,11 @@ cordova.plugins.YMAgentSdk.changeAgentStatus(
 );
 ```
 
-- successCallBack : `function (value)`
+- successCallBack : `function (successResult)`
 
-  - value: `String` - "OK"
+  - successResult: `String` - "OK"
 
-- failureCallBack :function (errorJson)
+- failureCallBack :`function (errorJson)`
 
   - errorJson: `Object` -
 
@@ -255,9 +255,9 @@ Current agent status can be accessed by calling `getAgentStatus`
 cordova.plugins.YMAgentSdk.getAgentStatus(successCallBack, failureCallBack);
 ```
 
-- successCallBack : `function (value)`
+- successCallBack : `function (successResult)`
 
-  - value: `String` - "OK"
+  - successResult: `String` - "OK"
 
 - failureCallBack :`function (errorJson)`
 
@@ -291,7 +291,7 @@ cordova.plugins.YMAgentSdk.logout(successCallBack, failureCallBack);
 
   - value: `String` - "OK"
 
-- failureCallBack :function (errorJson)
+- failureCallBack :`function (errorJson)`
 
   - errorJson: `Object` -
 
