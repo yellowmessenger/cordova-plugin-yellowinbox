@@ -56,9 +56,9 @@ cordova.plugins.YMAgentSdk.startOverviewScreen(
 );
 ```
 
-- successCallBack :`function (value)`
+- successCallBack :`function (successResult)`
 
-  - value: `String` - "OK"
+  - successResult: `String` - "OK"
 
 - failureCallBack :`function (errorJson)`
 
@@ -259,7 +259,7 @@ cordova.plugins.YMAgentSdk.getAgentStatus(successCallBack, failureCallBack);
 
   - value: `String` - "OK"
 
-- failureCallBack :function (errorJson)
+- failureCallBack :`function (errorJson)`
 
   - errorJson: `Object` -
 
@@ -271,7 +271,7 @@ cordova.plugins.YMAgentSdk.getAgentStatus(successCallBack, failureCallBack);
     }
     ```
 
-- status: String
+- status: `String`
 
   - AVAILABLE
   - AWAY
