@@ -15,7 +15,7 @@ import org.json.JSONObject;
 
 import ai.yellow.agentsdk.utils.Utils;
 
-public class AgentSdkIonicBroadCastReceiver extends YmMessageReceiver {
+public class YMAgentSdkIonicBroadCastReceiver extends YmMessageReceiver {
 
   private final CallbackContext callBackContext;
   private final String titleString = "title";
@@ -23,7 +23,7 @@ public class AgentSdkIonicBroadCastReceiver extends YmMessageReceiver {
   private final String modelString = "model";
   private final String eventType = "eventType";
 
-  AgentSdkIonicBroadCastReceiver(CallbackContext callBackContext) {
+  YMAgentSdkIonicBroadCastReceiver(CallbackContext callBackContext) {
     this.callBackContext = callBackContext;
   }
 

@@ -32,11 +32,11 @@ import ai.yellow.agentsdk.utils.Utils;
 /**
  * This class echoes a string called from JavaScript.
  */
-public class AgentSdkModule extends CordovaPlugin {
+public class YMAgentSdkModule extends CordovaPlugin {
 
   private Context ionicContext;
   private Activity ionicActivity;
-  private AgentSdkIonicBroadCastReceiver ymMessageReceiver;
+  private YMAgentSdkIonicBroadCastReceiver ymMessageReceiver;
 
   @Override
   public void onStart() {
@@ -48,8 +48,8 @@ public class AgentSdkModule extends CordovaPlugin {
   public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
 
     switch (action) {
-      case "init": {
-        init(args, callbackContext);
+      case "initializeYMAgentSdk": {
+        initializeYMAgentSdk(args, callbackContext);
         return true;
       }
       case "setFirebaseDeviceToken": {
@@ -114,7 +114,7 @@ public class AgentSdkModule extends CordovaPlugin {
     return false;
   }
 
-  private void init(JSONArray args, CallbackContext callbackContext) {
+  private void initializeYMAgentSdk(JSONArray args, CallbackContext callbackContext) {
 
     Log.d("YmLog", "initialising");
 
@@ -201,7 +201,7 @@ public class AgentSdkModule extends CordovaPlugin {
   private void setLocalReceiver(JSONArray args, CallbackContext callbackContext) {
     Log.d("YmLog", "attached local listener");
 
-    ymMessageReceiver = new AgentSdkIonicBroadCastReceiver(callbackContext);
+    ymMessageReceiver = new YMAgentSdkIonicBroadCastReceiver(callbackContext);
     YellowInbox.setLocalReceiver(ymMessageReceiver);
 
   }

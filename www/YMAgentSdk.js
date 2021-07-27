@@ -2,9 +2,9 @@ var exec = require('cordova/exec');
 
 const AgentSdk =
 {
-    init: (success, failure, apiKey, userId, botId) => {
+    initializeYMAgentSdk: (success, failure, apiKey, userId, botId) => {
         console.log(`Calling init apiKey: ${apiKey}, userId: ${userId}, botId: ${botId}`)
-        exec(success, failure, 'YMAgentSdk', 'init', [apiKey, userId, botId]);
+        exec(success, failure, 'YMAgentSdk', 'initializeYMAgentSdk', [apiKey, userId, botId]);
     },
 
     setFirebaseDeviceToken: (token) => {
