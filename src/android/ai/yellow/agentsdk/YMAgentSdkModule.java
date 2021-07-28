@@ -48,8 +48,12 @@ public class YMAgentSdkModule extends CordovaPlugin {
   public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
 
     switch (action) {
-      case "initializeYMAgentSdk": {
-        initializeYMAgentSdk(args, callbackContext);
+      case "initialize": {
+        initialize(args, callbackContext);
+        return true;
+      }
+      case "initializeInternal": {
+        initializeInternal(args, callbackContext);
         return true;
       }
       case "setFirebaseDeviceToken": {
@@ -114,41 +118,44 @@ public class YMAgentSdkModule extends CordovaPlugin {
     return false;
   }
 
-  private void initializeYMAgentSdk(JSONArray args, CallbackContext callbackContext) {
-
-    Log.d("YmLog", "initialising");
+  private void initialize(JSONArray args, CallbackContext callbackContext) {
 
     ionicContext = this.cordova.getActivity().getApplicationContext();
     ionicActivity = cordova.getActivity();
-    // this.cordova.getActivity().runOnUiThread(new Runnable() {
-    // @Override
-    // public void run() {
-    // try {
-    //
-    // String apiKey = args.getString(0);
-    // String userId = args.getString(1);
-    // String botId = args.getString(2);
-    //
-    // ProcessLifecycleOwner.get().getLifecycle().addObserver(new
-    // YmAppProcessLifeCycleListener());
-    //
-    // final Observer<? super Resource<Void>> observer = new
-    // Observer<Resource<Void>>() {
-    // @Override
-    // public void onChanged(Resource<Void> resource) {
-    // Log.d("YmLog", "Ssending success");
-    // Utils.successHelper(callbackContext);
-    // }
-    // };
-    //
-    // YellowInbox.init(ionicContext, apiKey, userId,
-    // botId).observe(ProcessLifecycleOwner.get(), observer);
-    //
-    // } catch (Exception e) {
-    // Utils.errorHelper(e, callbackContext);
-    // }
-    // }
-    // });
+
+    Log.d("YmLog", "initialising");
+    this.cordova.getActivity().runOnUiThread(new Runnable() {
+      @Override
+      public void run() {
+        try {
+
+          String apiKey = args.getString(0);
+          String userId = args.getString(1);
+          String botId = args.getString(2);
+
+          ProcessLifecycleOwner.get().getLifecycle().addObserver(new YmAppProcessLifeCycleListener());
+
+          final Observer<? super Resource<Void>> observer = new Observer<Resource<Void>>() {
+            @Override
+            public void onChanged(Resource<Void> resource) {
+              Log.d("YmLog", "Sending success");
+              Utils.genericSuccessHelper(callbackContext);
+            }
+          };
+
+          YellowInbox.init(ionicContext, apiKey, userId, botId).observe(ProcessLifecycleOwner.get(), observer);
+
+        } catch (Exception e) {
+          Utils.genericErrorHelper(e, callbackContext);
+        }
+      }
+    });
+
+  }
+
+  private void initializeInternal(JSONArray args, CallbackContext callbackContext) {
+    ionicContext = this.cordova.getActivity().getApplicationContext();
+    ionicActivity = cordova.getActivity();
 
     ionicActivity.runOnUiThread(new Runnable() {
       @Override
@@ -159,9 +166,9 @@ public class YMAgentSdkModule extends CordovaPlugin {
           String apiKey = args.getString(0);
           String userId = args.getString(1);
           String botId = args.getString(2);
+          String source = args.getString(3);
 
-          YellowInbox.initInternal(ionicContext, botId, getInternalData(botId, userId, apiKey),
-              "ai.yellow.supportagent");
+          YellowInbox.initInternal(ionicContext, botId, getInternalData(botId, userId, apiKey), source);
           Utils.genericSuccessHelper(callbackContext);
 
         } catch (Exception e) {
@@ -169,7 +176,6 @@ public class YMAgentSdkModule extends CordovaPlugin {
         }
       }
     });
-
   }
 
   private String getInternalData(String botId, String userId, String apiKey) {
