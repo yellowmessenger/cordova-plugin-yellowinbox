@@ -31,9 +31,6 @@
         <!-- Utils java files -->
         <source-file src="src/android/ai/yellow/agentsdk/utils/Utils.java" target-dir="src/ai/yellow/agentsdk/utils" />
 
-        <!-- Models java files -->
-        <source-file src="src/android/ai/yellow/agentsdk/models/ClientModel.java" target-dir="src/ai/yellow/agentsdk/models" />
-
         <framework custom="true" src="src/android/ai/yellow/agentsdk/agentSdk.gradle" type="gradleReference" />
         <framework src="androidx.appcompat:appcompat:1.0.0" />
     </platform>

@@ -26,7 +26,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import ai.yellow.agentsdk.models.ClientModel;
 import ai.yellow.agentsdk.utils.Utils;
 
 /**
@@ -52,10 +51,6 @@ public class YMAgentSdkModule extends CordovaPlugin {
         initialize(args, callbackContext);
         return true;
       }
-      case "initializeInternal": {
-        initializeInternal(args, callbackContext);
-        return true;
-      }
       case "setFirebaseDeviceToken": {
         setFirebaseDeviceToken(args, callbackContext);
         return true;
@@ -66,10 +61,6 @@ public class YMAgentSdkModule extends CordovaPlugin {
       }
       case "setUpdatedEvent": {
         setUpdatedEvent(args, callbackContext);
-        return true;
-      }
-      case "changeBot": {
-        changeBot(args, callbackContext);
         return true;
       }
       case "changeAgentStatus": {
@@ -108,12 +99,6 @@ public class YMAgentSdkModule extends CordovaPlugin {
         startMyChatActivity(args, callbackContext);
         return true;
       }
-      case "getAgents": {
-        Log.d("YmLog", "Getting agent status");
-        getAgents(args, callbackContext);
-        return true;
-      }
-
     }
     return false;
   }
@@ -153,43 +138,6 @@ public class YMAgentSdkModule extends CordovaPlugin {
 
   }
 
-  private void initializeInternal(JSONArray args, CallbackContext callbackContext) {
-    ionicContext = this.cordova.getActivity().getApplicationContext();
-    ionicActivity = cordova.getActivity();
-
-    ionicActivity.runOnUiThread(new Runnable() {
-      @Override
-      public void run() {
-        try {
-          ProcessLifecycleOwner.get().getLifecycle().addObserver(new YmAppProcessLifeCycleListener());
-
-          String apiKey = args.getString(0);
-          String userId = args.getString(1);
-          String botId = args.getString(2);
-          String source = args.getString(3);
-
-          YellowInbox.initInternal(ionicContext, botId, getInternalData(botId, userId, apiKey), source);
-          Utils.genericSuccessHelper(callbackContext);
-
-        } catch (Exception e) {
-          Utils.genericErrorHelper(e, callbackContext);
-        }
-      }
-    });
-  }
-
-  private String getInternalData(String botId, String userId, String apiKey) {
-    Roles roles = new Roles(botId, "ROLE_BOT_ECHO_AGENT");
-    List<Roles> listRoles = new ArrayList<Roles>();
-    listRoles.add(roles);
-    User user = new User(null, null, null, listRoles, "Purushottam yadav battula", null, null,
-        "purushottam.yadav@yellow.ai", userId, null);
-    ClientModel model = new ClientModel(apiKey, user);
-
-    return Utils.gson.toJson(model);
-
-  }
-
   private void setFirebaseDeviceToken(JSONArray args, CallbackContext callbackContext) {
     try {
 
@@ -214,28 +162,6 @@ public class YMAgentSdkModule extends CordovaPlugin {
 
   private void setUpdatedEvent(JSONArray args, CallbackContext callbackContext) {
     ymMessageReceiver.sendNotification(args, callbackContext);
-  }
-
-  private void changeBot(JSONArray args, CallbackContext callbackContext) {
-    ionicActivity.runOnUiThread(new Runnable() {
-      @Override
-      public void run() {
-        try {
-
-          String botId = args.getString(0);
-          int subscriptionId = args.getInt(1);
-
-          YellowInbox.changeBot(botId, subscriptionId, "ai.yellow.supportagent");
-          Utils.genericSuccessHelper(callbackContext);
-
-        } catch (Exception e) {
-
-          Utils.genericErrorHelper(e, callbackContext);
-
-        }
-      }
-    });
-
   }
 
   private void changeAgentStatus(JSONArray args, CallbackContext callbackContext) {
@@ -395,40 +321,6 @@ public class YMAgentSdkModule extends CordovaPlugin {
 
           Utils.genericErrorHelper(e, callbackContext);
 
-        }
-      }
-    });
-  }
-
-  private void getAgents(JSONArray args, CallbackContext callbackContext) {
-    ionicActivity.runOnUiThread(new Runnable() {
-      @Override
-      public void run() {
-
-        try {
-          YellowInbox.getAgents().observe(ProcessLifecycleOwner.get(), new Observer<Resource<List<AgentModel>>>() {
-            @Override
-            public void onChanged(Resource<List<AgentModel>> agentsResource) {
-              switch (agentsResource.getStatus()) {
-                case SUCCESS:
-                  try {
-                    callbackContext
-                        .success(new JSONArray(Utils.gson.toJson(agentsResource.getData(), Utils.listAgentModelType)));
-                  } catch (Exception e) {
-                    Utils.genericErrorHelper(e, callbackContext);
-                  }
-                  break;
-                case ERROR:
-                  Utils.sdkErrorHelper(agentsResource.getMessage(), callbackContext);
-                  break;
-                case LOADING:
-                  break;
-              }
-            }
-          });
-        } catch (Exception e) {
-
-          Utils.genericErrorHelper(e, callbackContext);
         }
       }
     });

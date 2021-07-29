@@ -7,11 +7,6 @@ const AgentSdk =
         exec(success, failure, 'YMAgentSdk', 'initialize', [apiKey, userId, botId]);
     },
 
-    initializeInternal: (success, failure, apiKey, userId, botId, source) => {
-        console.log(`Calling initInternal apiKey: ${apiKey}, userId: ${userId}, botId: ${botId}, source: ${source}`)
-        exec(success, failure, 'YMAgentSdk', 'initializeInternal', [apiKey, userId, botId, source]);
-    },
-
     setFirebaseDeviceToken: (token) => {
         exec(null, null, 'YMAgentSdk', 'setFirebaseDeviceToken', [token]);
     },
@@ -26,10 +21,6 @@ const AgentSdk =
 
     setUpdatedEvent: (success, failure, title, body, model, eventType) => {
         exec(success, failure, 'YMAgentSdk', 'setUpdatedEvent', [title, body, model, eventType]);
-    },
-
-    changeBot: (success, failure, botId, subscriptionId) => {
-        exec(success, failure, 'YMAgentSdk', 'changeBot', [botId, subscriptionId]);
     },
 
     changeAgentStatus: (success, failure, status) => {
@@ -52,10 +43,6 @@ const AgentSdk =
     startMyChatScreen: (success, failure) => {
         exec(success, failure, 'YMAgentSdk', 'startMyChatActivity', []);
     },
-
-    getAgents: (success, failure) => {
-        exec(success, failure, 'YMAgentSdk', 'getAgents', []);
-    }
 }
 
 module.exports = AgentSdk
