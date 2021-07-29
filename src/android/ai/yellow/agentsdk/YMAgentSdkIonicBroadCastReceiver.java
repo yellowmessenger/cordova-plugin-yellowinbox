@@ -46,7 +46,6 @@ public class YMAgentSdkIonicBroadCastReceiver extends YmMessageReceiver {
 
       PluginResult errorPluginResult = new PluginResult(PluginResult.Status.ERROR, e.getStackTrace().toString());
       errorPluginResult.setKeepCallback(true);
-      Log.d("YmLog", "Event sending failed");
       this.callBackContext.sendPluginResult(errorPluginResult);
       try {
         super.clone();
@@ -70,15 +69,12 @@ public class YMAgentSdkIonicBroadCastReceiver extends YmMessageReceiver {
       PluginResult successPluginResult = new PluginResult(PluginResult.Status.OK, event);
       successPluginResult.setKeepCallback(true);
       this.callBackContext.sendPluginResult(successPluginResult);
-      Log.d("YmLog", "Event sent");
-      Log.d("YmLog", event.toString());
+      ;
 
     } catch (Exception e) {
 
-      Log.e("YmLog", "error", e);
       PluginResult successPluginResult = new PluginResult(PluginResult.Status.ERROR, "Parsing error");
       successPluginResult.setKeepCallback(true);
-      Log.d("YmLog", "Event sending failed");
       this.callBackContext.sendPluginResult(successPluginResult);
 
     }
@@ -91,17 +87,12 @@ public class YMAgentSdkIonicBroadCastReceiver extends YmMessageReceiver {
       String body = args.getString(1);
       JSONObject data = args.getJSONObject(2);
       String eventType = args.getString(3);
-      Log.d("YmLog", args.toString());
-
       if (eventType.equals(Utils.TicketCreateEvent)) {
-        Log.d("YmLog", "Sending ticket create notification");
         YmTicketCreateModel ymTicketCreateModel = Utils.gson.fromJson(data.toString(), YmTicketCreateModel.class);
         super.onTicketCreateEventReceived(title, body, ymTicketCreateModel);
 
       } else if (eventType.equals(Utils.TicketUpdateEvent)) {
-        Log.d("YmLog", "Sending ticket update notification");
         YmXMPPMessageModel ymTicketUpdateModel = Utils.gson.fromJson(data.toString(), YmXMPPMessageModel.class);
-        Log.d("YmLog", ymTicketUpdateModel.getData().toString());
         super.onTicketUpdateEventReceived(title, body, ymTicketUpdateModel);
 
       }

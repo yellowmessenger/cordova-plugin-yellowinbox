@@ -40,7 +40,6 @@ public class YMAgentSdkModule extends CordovaPlugin {
   @Override
   public void onStart() {
     super.onStart();
-    Log.d("YmChat", "Startd applciation");
   }
 
   @Override
@@ -79,23 +78,11 @@ public class YMAgentSdkModule extends CordovaPlugin {
         logout(args, callbackContext);
         return true;
       }
-      case "getOverviewFragment": {
-        Log.d("YmLog", "Starting overview fragment");
-        getOverviewFragment(args, callbackContext);
-        return true;
-      }
       case "startOverviewActivity": {
-        Log.d("YmLog", "Starting overview activity");
         startOverviewActivity(args, callbackContext);
         return true;
       }
-      case "getMyChatsFragment": {
-        Log.d("YmLog", "Starting overview fragment");
-        getMyChatsFragment(args, callbackContext);
-        return true;
-      }
       case "startMyChatActivity": {
-        Log.d("YmLog", "Starting MyChat Activity");
         startMyChatActivity(args, callbackContext);
         return true;
       }
@@ -107,8 +94,7 @@ public class YMAgentSdkModule extends CordovaPlugin {
 
     ionicContext = this.cordova.getActivity().getApplicationContext();
     ionicActivity = cordova.getActivity();
-
-    Log.d("YmLog", "initialising");
+    
     this.cordova.getActivity().runOnUiThread(new Runnable() {
       @Override
       public void run() {
@@ -270,18 +256,7 @@ public class YMAgentSdkModule extends CordovaPlugin {
     });
 
   }
-
-  private void getOverviewFragment(JSONArray args, CallbackContext callbackContext) {
-    try {
-
-      Fragment overViewFragment = YellowInbox.getOverviewFragment();
-      Utils.genericSuccessHelper(callbackContext);
-
-    } catch (Exception e) {
-      Utils.genericErrorHelper(e, callbackContext);
-    }
-  }
-
+  
   private void startOverviewActivity(JSONArray args, CallbackContext callbackContext) {
 
     ionicActivity.runOnUiThread(new Runnable() {
@@ -297,14 +272,6 @@ public class YMAgentSdkModule extends CordovaPlugin {
         }
       }
     });
-  }
-
-  private void getMyChatsFragment(JSONArray args, CallbackContext callbackContext) {
-    try {
-      Fragment myChatsFragment = YellowInbox.getMyChatsFragment();
-    } catch (Exception e) {
-      Utils.genericErrorHelper(e, callbackContext);
-    }
   }
 
   private void startMyChatActivity(JSONArray args, CallbackContext callbackContext) {

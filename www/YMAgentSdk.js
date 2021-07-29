@@ -3,7 +3,6 @@ var exec = require('cordova/exec');
 const AgentSdk =
 {
     initialize: (success, failure, apiKey, userId, botId) => {
-        console.log(`Calling init apiKey: ${apiKey}, userId: ${userId}, botId: ${botId}`)
         exec(success, failure, 'YMAgentSdk', 'initialize', [apiKey, userId, botId]);
     },
 
@@ -36,7 +35,6 @@ const AgentSdk =
     },
 
     startOverviewScreen: (success, failure) => {
-        console.log("Starting overview activity");
         exec(success, failure, 'YMAgentSdk', 'startOverviewActivity', []);
     },
 
