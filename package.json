@@ -1,7 +1,7 @@
 {
   "name": "cordova-plugin-yellowinbox",
   "version": "1.0.0",
-  "description": "",
+  "description": "Cordova plugin to integrate with yellow.ai inbox sdk",
   "cordova": {
     "id": "cordova-plugin-yellowinbox",
     "platforms": [
@@ -12,9 +12,10 @@
   "keywords": [
     "ecosystem:cordova",
     "cordova-android",
-    "cordova-ios"
+    "cordova-ios",
+    "cordova-plugin-yellowinbox"
   ],
-  "author": "Purushottam",
+  "author": "Purushottam Yadav Battula",
   "license": "ISC",
   "engines": {}
 }

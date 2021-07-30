@@ -22,7 +22,7 @@
             <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
             <uses-permission android:name="android.permission.READ_PHONE_STATE" />
         </config-file>
-        <lib-file src="src/android/ai/yellow/agentsdk/core-sdk-debug.aar"/>
+        <lib-file src="src/android/ai/yellow/agentsdk/core-sdk-release.aar"/>
 
         <!-- Source java files -->
         <source-file src="src/android/ai/yellow/agentsdk/YMAgentSdkModule.java" target-dir="src/ai/yellow/agentsdk" />
