@@ -62,8 +62,8 @@ public class YMAgentSdkModule extends CordovaPlugin {
         setUpdatedEvent(args, callbackContext);
         return true;
       }
-      case "changeAgentStatus": {
-        changeAgentStatus(args, callbackContext);
+      case "setAgentStatus": {
+        setAgentStatus(args, callbackContext);
         return true;
       }
       case "getAgentStatus": {
@@ -94,7 +94,7 @@ public class YMAgentSdkModule extends CordovaPlugin {
 
     ionicContext = this.cordova.getActivity().getApplicationContext();
     ionicActivity = cordova.getActivity();
-    
+
     this.cordova.getActivity().runOnUiThread(new Runnable() {
       @Override
       public void run() {
@@ -150,7 +150,7 @@ public class YMAgentSdkModule extends CordovaPlugin {
     ymMessageReceiver.sendNotification(args, callbackContext);
   }
 
-  private void changeAgentStatus(JSONArray args, CallbackContext callbackContext) {
+  private void setAgentStatus(JSONArray args, CallbackContext callbackContext) {
     ionicActivity.runOnUiThread(new Runnable() {
       @Override
       public void run() {
@@ -173,7 +173,7 @@ public class YMAgentSdkModule extends CordovaPlugin {
 
           Log.d("YmLog", "Changing status to " + status);
 
-          YellowInbox.changeAgentStatus(statusToChange).observe(ProcessLifecycleOwner.get(),
+          YellowInbox.setAgentStatus(statusToChange).observe(ProcessLifecycleOwner.get(),
               new Observer<Resource<Void>>() {
                 @Override
                 public void onChanged(Resource<Void> resource) {
@@ -256,7 +256,7 @@ public class YMAgentSdkModule extends CordovaPlugin {
     });
 
   }
-  
+
   private void startOverviewActivity(JSONArray args, CallbackContext callbackContext) {
 
     ionicActivity.runOnUiThread(new Runnable() {

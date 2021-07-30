@@ -22,8 +22,8 @@ const AgentSdk =
         exec(success, failure, 'YMAgentSdk', 'setUpdatedEvent', [title, body, model, eventType]);
     },
 
-    changeAgentStatus: (success, failure, status) => {
-        exec(success, failure, 'YMAgentSdk', 'changeAgentStatus', [status]);
+    setAgentStatus: (success, failure, status) => {
+        exec(success, failure, 'YMAgentSdk', 'setAgentStatus', [status]);
     },
 
     getAgentStatus: (success, failure) => {
