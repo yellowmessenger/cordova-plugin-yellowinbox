@@ -2,7 +2,7 @@ var exec = require('cordova/exec');
 
 const AgentSdk =
 {
-    initialize: (success, failure, apiKey, userId, botId) => {
+    initialize: (apiKey, userId, botId, success, failure) => {
         exec(success, failure, 'YMAgentSdk', 'initialize', [apiKey, userId, botId]);
     },
 
@@ -18,11 +18,11 @@ const AgentSdk =
         exec(eventCallBack, failureCallBack, 'YMAgentSdk', 'setLocalReceiver', []);
     },
 
-    setUpdatedEvent: (success, failure, title, body, model, eventType) => {
+    setUpdatedEvent: (title, body, model, eventType, success, failure) => {
         exec(success, failure, 'YMAgentSdk', 'setUpdatedEvent', [title, body, model, eventType]);
     },
 
-    setAgentStatus: (success, failure, status) => {
+    setAgentStatus: (status, success, failure) => {
         exec(success, failure, 'YMAgentSdk', 'setAgentStatus', [status]);
     },
 
