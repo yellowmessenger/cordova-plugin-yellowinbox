@@ -1,4 +1,4 @@
-package ai.yellow.agentsdk;
+package ai.yellow.inbox;
 
 import android.app.Activity;
 import android.content.Context;
@@ -22,20 +22,20 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import ai.yellow.inbox.utils.Utils;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import ai.yellow.agentsdk.utils.Utils;
-
 /**
  * This class echoes a string called from JavaScript.
  */
-public class YMAgentSdkModule extends CordovaPlugin {
+public class YellowInboxModule extends CordovaPlugin {
 
   private Context ionicContext;
   private Activity ionicActivity;
-  private YMAgentSdkIonicBroadCastReceiver ymMessageReceiver;
+  private YellowInboxBroadCastReceiver ymMessageReceiver;
 
   @Override
   public void onStart() {
@@ -141,7 +141,7 @@ public class YMAgentSdkModule extends CordovaPlugin {
   private void setLocalReceiver(JSONArray args, CallbackContext callbackContext) {
     Log.d("YmLog", "attached local listener");
 
-    ymMessageReceiver = new YMAgentSdkIonicBroadCastReceiver(callbackContext);
+    ymMessageReceiver = new YellowInboxBroadCastReceiver(callbackContext);
     YellowInbox.setLocalReceiver(ymMessageReceiver);
 
   }

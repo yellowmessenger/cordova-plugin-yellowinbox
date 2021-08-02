@@ -1,4 +1,4 @@
-package ai.yellow.agentsdk.utils;
+package ai.yellow.inbox.utils;
 
 import android.util.Log;
 
