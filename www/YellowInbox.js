@@ -41,6 +41,13 @@ const YellowInbox =
     showMyChatScreen: (success, failure) => {
         exec(success, failure, 'YellowInbox', 'showMyChatScreen', []);
     },
+
+    AgentStatus: {
+        AVAILABLE: "AVAILABLE",
+        BUSY: "BUSY",
+        AWAY: "AWAY",
+        UNKNOWN: "UNKNOWN"
+    }
 }
 
 module.exports = YellowInbox
