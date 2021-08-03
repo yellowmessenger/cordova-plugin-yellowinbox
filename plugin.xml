@@ -2,15 +2,15 @@
 <plugin id="cordova-plugin-yellowinbox" version="1.0.2"
     xmlns="http://apache.org/cordova/ns/plugins/1.0"
     xmlns:android="http://schemas.android.com/apk/res/android">
-    <name>YMAgentSdk</name>
-    <js-module name="YMAgentSdk" src="www/YMAgentSdk.js">
-        <clobbers target="cordova.plugins.YMAgentSdk" />
+    <name>YellowInbox</name>
+    <js-module name="YellowInbox" src="www/YellowInbox.js">
+        <clobbers target="cordova.plugins.YellowInbox" />
     </js-module>
     <platform name="android">
         <dependency id="cordova-plugin-androidx-adapter"/>
         <config-file parent="/*" target="res/xml/config.xml">
-            <feature name="YMAgentSdk">
-                <param name="android-package" value="ai.yellow.agentsdk.YMAgentSdkModule" />
+            <feature name="YellowInbox">
+                <param name="android-package" value="ai.yellow.inbox.YellowInboxModule" />
             </feature>
         </config-file>
         <config-file parent="/*" target="config.xml">
@@ -18,32 +18,31 @@
         </config-file>
         <config-file parent="/*" target="AndroidManifest.xml">
             <uses-permission android:name="android.permission.INTERNET"/>
-            <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
             <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
             <uses-permission android:name="android.permission.READ_PHONE_STATE" />
         </config-file>
-        <lib-file src="src/android/ai/yellow/agentsdk/core-sdk-release.aar"/>
+        <lib-file src="src/android/ai/yellow/inbox/yellowInbox.aar"/>
 
         <!-- Source java files -->
-        <source-file src="src/android/ai/yellow/agentsdk/YMAgentSdkModule.java" target-dir="src/ai/yellow/agentsdk" />
-        <source-file src="src/android/ai/yellow/agentsdk/YMAgentSdkIonicBroadCastReceiver.java" target-dir="src/ai/yellow/agentsdk" />
+        <source-file src="src/android/ai/yellow/inbox/YellowInboxModule.java" target-dir="src/ai/yellow/inbox" />
+        <source-file src="src/android/ai/yellow/inbox/YellowInboxBroadCastReceiver.java" target-dir="src/ai/yellow/inbox" />
 
         <!-- Utils java files -->
-        <source-file src="src/android/ai/yellow/agentsdk/utils/Utils.java" target-dir="src/ai/yellow/agentsdk/utils" />
+        <source-file src="src/android/ai/yellow/inbox/utils/Utils.java" target-dir="src/ai/yellow/inbox/utils" />
 
-        <framework custom="true" src="src/android/ai/yellow/agentsdk/agentSdk.gradle" type="gradleReference" />
+        <framework custom="true" src="src/android/ai/yellow/inbox/yellowInbox.gradle" type="gradleReference" />
         <framework src="androidx.appcompat:appcompat:1.0.0" />
     </platform>
     <platform name="ios">
         <config-file parent="/*" target="config.xml">
-            <feature name="YMAgentSdk">
-                <param name="ios-package" value="YMAgentSdk"/>
+            <feature name="YellowInbox">
+                <param name="ios-package" value="YellowInbox"/>
             </feature>
             <preference name="deployment-target" value="13.0" />
             <preference name="target-device" value="universal" />
         </config-file>
         <!-- For swift support -->
-        <source-file src="src/ios/YMAgentSdk.swift" />
+        <source-file src="src/ios/YellowInbox.swift" />
         <!-- Add in the swift-support plugin by default -->
         <dependency id="cordova-plugin-add-swift-support" version="2.0.2"/>
         <podspec>

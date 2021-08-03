@@ -1,4 +1,4 @@
-package ai.yellow.agentsdk;
+package ai.yellow.inbox;
 
 import android.app.Activity;
 import android.content.Context;
@@ -22,20 +22,20 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import ai.yellow.inbox.utils.Utils;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import ai.yellow.agentsdk.utils.Utils;
-
 /**
  * This class echoes a string called from JavaScript.
  */
-public class YMAgentSdkModule extends CordovaPlugin {
+public class YellowInboxModule extends CordovaPlugin {
 
   private Context ionicContext;
   private Activity ionicActivity;
-  private YMAgentSdkIonicBroadCastReceiver ymMessageReceiver;
+  private YellowInboxBroadCastReceiver ymMessageReceiver;
 
   @Override
   public void onStart() {
@@ -78,11 +78,11 @@ public class YMAgentSdkModule extends CordovaPlugin {
         logout(args, callbackContext);
         return true;
       }
-      case "startOverviewActivity": {
+      case "startOverviewScreen": {
         startOverviewActivity(args, callbackContext);
         return true;
       }
-      case "startMyChatActivity": {
+      case "startMyChatScreen": {
         startMyChatActivity(args, callbackContext);
         return true;
       }
@@ -109,7 +109,6 @@ public class YMAgentSdkModule extends CordovaPlugin {
           final Observer<? super Resource<Void>> observer = new Observer<Resource<Void>>() {
             @Override
             public void onChanged(Resource<Void> resource) {
-              Log.d("YmLog", "Sending success");
               Utils.genericSuccessHelper(callbackContext);
             }
           };
@@ -139,9 +138,8 @@ public class YMAgentSdkModule extends CordovaPlugin {
   }
 
   private void setLocalReceiver(JSONArray args, CallbackContext callbackContext) {
-    Log.d("YmLog", "attached local listener");
 
-    ymMessageReceiver = new YMAgentSdkIonicBroadCastReceiver(callbackContext);
+    ymMessageReceiver = new YellowInboxBroadCastReceiver(callbackContext);
     YellowInbox.setLocalReceiver(ymMessageReceiver);
 
   }
@@ -170,8 +168,6 @@ public class YMAgentSdkModule extends CordovaPlugin {
               statusToChange = YmAgentStatus.BUSY;
               break;
           }
-
-          Log.d("YmLog", "Changing status to " + status);
 
           YellowInbox.setAgentStatus(statusToChange).observe(ProcessLifecycleOwner.get(),
               new Observer<Resource<Void>>() {

@@ -49,7 +49,7 @@ dependencies {
     //Event bus
     implementation 'org.greenrobot:eventbus:3.2.0'
     
-    compile(name:'core-sdk-release', ext:'aar')
+    compile(name:'yellowInbox', ext:'aar')
 
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'

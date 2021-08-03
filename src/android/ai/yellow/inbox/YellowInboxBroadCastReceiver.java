@@ -1,4 +1,4 @@
-package ai.yellow.agentsdk;
+package ai.yellow.inbox;
 
 import android.util.Log;
 
@@ -13,9 +13,9 @@ import org.jetbrains.annotations.Nullable;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import ai.yellow.agentsdk.utils.Utils;
+import ai.yellow.inbox.utils.Utils;
 
-public class YMAgentSdkIonicBroadCastReceiver extends YmMessageReceiver {
+public class YellowInboxBroadCastReceiver extends YmMessageReceiver {
 
   private final CallbackContext callBackContext;
   private final String titleString = "title";
@@ -23,7 +23,7 @@ public class YMAgentSdkIonicBroadCastReceiver extends YmMessageReceiver {
   private final String modelString = "model";
   private final String eventType = "eventType";
 
-  YMAgentSdkIonicBroadCastReceiver(CallbackContext callBackContext) {
+  YellowInboxBroadCastReceiver(CallbackContext callBackContext) {
     this.callBackContext = callBackContext;
   }
 

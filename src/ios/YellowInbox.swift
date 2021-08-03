@@ -5,9 +5,9 @@
 
 import YMSupport
 
-@objc(YMAgentSdk) public class YMAgentSdk : CDVPlugin {
-    @objc(initializeYMAgentSdk:)
-    public func initializeYMAgentSdk(_ command: CDVInvokedUrlCommand)
+@objc(YellowInbox) public class YellowInbox : CDVPlugin {
+    @objc(initialize:)
+    public func initialize(_ command: CDVInvokedUrlCommand)
     {
         let apiKey:NSString = command.argument(at: 0) as! NSString
         let userId:NSString = command.argument(at: 0) as! NSString
@@ -43,16 +43,8 @@ import YMSupport
         genricSuccessResult(command)
     }
     
-    @objc(changeBot:)
-    public func changeBot(_ command: CDVInvokedUrlCommand)
-    {
-        let botId:NSString = command.argument(at: 0) as! NSString
-        let subscriptionId:NSString = command.argument(at: 0) as! NSString
-        genricSuccessResult(command)
-    }
-    
-    @objc(changeAgentStatus:)
-    public func changeAgentStatus(_ command: CDVInvokedUrlCommand)
+    @objc(setAgentStatus:)
+    public func setAgentStatus(_ command: CDVInvokedUrlCommand)
     {
         let agentStatus:NSString = command.argument(at: 0) as! NSString
         genricSuccessResult(command)
@@ -75,9 +67,9 @@ import YMSupport
     {
         genricSuccessResult(command)
     }
-    
-    @objc(getAgents:)
-    public func getAgents(_ command: CDVInvokedUrlCommand)
+
+     @objc(startOverviewScreen:)
+    public func startOverviewScreen(_ command: CDVInvokedUrlCommand)
     {
         genricSuccessResult(command)
     }
