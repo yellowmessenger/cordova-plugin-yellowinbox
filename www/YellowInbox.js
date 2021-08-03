@@ -36,11 +36,11 @@ const YellowInbox =
     },
 
     startOverviewScreen: (success, failure) => {
-        exec(success, failure, 'YellowInbox', 'startOverviewActivity', []);
+        exec(success, failure, 'YellowInbox', 'startOverviewScreen', []);
     },
 
     startMyChatScreen: (success, failure) => {
-        exec(success, failure, 'YellowInbox', 'startMyChatActivity', []);
+        exec(success, failure, 'YellowInbox', 'startMyChatScreen', []);
     },
 }
 
