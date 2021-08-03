@@ -47,11 +47,6 @@ public class YellowInboxBroadCastReceiver extends YmMessageReceiver {
       PluginResult errorPluginResult = new PluginResult(PluginResult.Status.ERROR, e.getStackTrace().toString());
       errorPluginResult.setKeepCallback(true);
       this.callBackContext.sendPluginResult(errorPluginResult);
-      try {
-        super.clone();
-      } catch (CloneNotSupportedException cloneNotSupportedException) {
-        cloneNotSupportedException.printStackTrace();
-      }
 
     }
   }
@@ -82,17 +77,18 @@ public class YellowInboxBroadCastReceiver extends YmMessageReceiver {
 
   public void sendNotification(JSONArray args, CallbackContext callbackContext) {
     try {
+      JSONObject event = args.getJSONObject(0);
 
-      String title = args.getString(0);
-      String body = args.getString(1);
-      JSONObject data = args.getJSONObject(2);
-      String eventType = args.getString(3);
+      String title = event.getString(this.titleString);
+      String body = event.getString(this.bodyString);
+      JSONObject model = event.getJSONObject(this.modelString);
+      String eventType = event.getString(this.eventType);
       if (eventType.equals(Utils.TicketCreateEvent)) {
-        YmTicketCreateModel ymTicketCreateModel = Utils.gson.fromJson(data.toString(), YmTicketCreateModel.class);
+        YmTicketCreateModel ymTicketCreateModel = Utils.gson.fromJson(model.toString(), YmTicketCreateModel.class);
         super.onTicketCreateEventReceived(title, body, ymTicketCreateModel);
 
       } else if (eventType.equals(Utils.TicketUpdateEvent)) {
-        YmXMPPMessageModel ymTicketUpdateModel = Utils.gson.fromJson(data.toString(), YmXMPPMessageModel.class);
+        YmXMPPMessageModel ymTicketUpdateModel = Utils.gson.fromJson(model.toString(), YmXMPPMessageModel.class);
         super.onTicketUpdateEventReceived(title, body, ymTicketUpdateModel);
 
       }

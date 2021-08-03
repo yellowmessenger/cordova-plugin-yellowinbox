@@ -18,8 +18,8 @@ const YellowInbox =
         exec(eventCallBack, failureCallBack, 'YellowInbox', 'setLocalReceiver', []);
     },
 
-    setUpdatedEvent: (title, body, model, eventType, success, failure) => {
-        exec(success, failure, 'YellowInbox', 'setUpdatedEvent', [title, body, model, eventType]);
+    setUpdatedEvent: (event, eventType, success, failure) => {
+        exec(success, failure, 'YellowInbox', 'setUpdatedEvent', [event]);
     },
 
     setAgentStatus: (status, success, failure) => {
