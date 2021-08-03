@@ -109,7 +109,6 @@ public class YellowInboxModule extends CordovaPlugin {
           final Observer<? super Resource<Void>> observer = new Observer<Resource<Void>>() {
             @Override
             public void onChanged(Resource<Void> resource) {
-              Log.d("YmLog", "Sending success");
               Utils.genericSuccessHelper(callbackContext);
             }
           };
@@ -139,7 +138,6 @@ public class YellowInboxModule extends CordovaPlugin {
   }
 
   private void setLocalReceiver(JSONArray args, CallbackContext callbackContext) {
-    Log.d("YmLog", "attached local listener");
 
     ymMessageReceiver = new YellowInboxBroadCastReceiver(callbackContext);
     YellowInbox.setLocalReceiver(ymMessageReceiver);
@@ -170,8 +168,6 @@ public class YellowInboxModule extends CordovaPlugin {
               statusToChange = YmAgentStatus.BUSY;
               break;
           }
-
-          Log.d("YmLog", "Changing status to " + status);
 
           YellowInbox.setAgentStatus(statusToChange).observe(ProcessLifecycleOwner.get(),
               new Observer<Resource<Void>>() {

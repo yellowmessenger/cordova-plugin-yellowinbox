@@ -3,7 +3,6 @@ var exec = require('cordova/exec');
 const YellowInbox =
 {
     initialize: (apiKey, userId, botId, success, failure) => {
-        console.log("Initilising")
         exec(success, failure, 'YellowInbox', 'initialize', [apiKey, userId, botId]);
     },
 
