@@ -78,11 +78,11 @@ public class YellowInboxModule extends CordovaPlugin {
         logout(args, callbackContext);
         return true;
       }
-      case "startOverviewScreen": {
+      case "showOverviewScreen": {
         startOverviewActivity(args, callbackContext);
         return true;
       }
-      case "startMyChatScreen": {
+      case "showMyChatScreen": {
         startMyChatActivity(args, callbackContext);
         return true;
       }

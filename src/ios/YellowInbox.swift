@@ -62,14 +62,14 @@ import YMSupport
         genricSuccessResult(command)
     }
     
-    @objc(startMyChatScreen:)
-    public func startMyChatScreen(_ command: CDVInvokedUrlCommand)
+    @objc(showMyChatScreen:)
+    public func showMyChatScreen(_ command: CDVInvokedUrlCommand)
     {
         genricSuccessResult(command)
     }
 
-     @objc(startOverviewScreen:)
-    public func startOverviewScreen(_ command: CDVInvokedUrlCommand)
+     @objc(showOverviewScreen:)
+    public func showOverviewScreen(_ command: CDVInvokedUrlCommand)
     {
         genricSuccessResult(command)
     }

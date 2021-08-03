@@ -34,12 +34,12 @@ const YellowInbox =
         exec(success, failure, 'YellowInbox', 'logout', []);
     },
 
-    startOverviewScreen: (success, failure) => {
-        exec(success, failure, 'YellowInbox', 'startOverviewScreen', []);
+    showOverviewScreen: (success, failure) => {
+        exec(success, failure, 'YellowInbox', 'showOverviewScreen', []);
     },
 
-    startMyChatScreen: (success, failure) => {
-        exec(success, failure, 'YellowInbox', 'startMyChatScreen', []);
+    showMyChatScreen: (success, failure) => {
+        exec(success, failure, 'YellowInbox', 'showMyChatScreen', []);
     },
 }
 
