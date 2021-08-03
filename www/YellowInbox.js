@@ -18,8 +18,8 @@ const YellowInbox =
         exec(eventCallBack, failureCallBack, 'YellowInbox', 'setLocalReceiver', []);
     },
 
-    setUpdatedEvent: (title, body, model, eventType, success, failure) => {
-        exec(success, failure, 'YellowInbox', 'setUpdatedEvent', [title, body, model, eventType]);
+    setUpdatedEvent: (event, eventType, success, failure) => {
+        exec(success, failure, 'YellowInbox', 'setUpdatedEvent', [event]);
     },
 
     setAgentStatus: (status, success, failure) => {
@@ -34,13 +34,20 @@ const YellowInbox =
         exec(success, failure, 'YellowInbox', 'logout', []);
     },
 
-    startOverviewScreen: (success, failure) => {
-        exec(success, failure, 'YellowInbox', 'startOverviewScreen', []);
+    showOverviewScreen: (success, failure) => {
+        exec(success, failure, 'YellowInbox', 'showOverviewScreen', []);
     },
 
-    startMyChatScreen: (success, failure) => {
-        exec(success, failure, 'YellowInbox', 'startMyChatScreen', []);
+    showMyChatScreen: (success, failure) => {
+        exec(success, failure, 'YellowInbox', 'showMyChatScreen', []);
     },
+
+    AgentStatus: {
+        AVAILABLE: "AVAILABLE",
+        BUSY: "BUSY",
+        AWAY: "AWAY",
+        UNKNOWN: "UNKNOWN"
+    }
 }
 
 module.exports = YellowInbox
