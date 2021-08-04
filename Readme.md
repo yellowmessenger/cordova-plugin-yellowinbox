@@ -3,7 +3,7 @@
 ## Documentation
 
 For integration and usage refer documentation
-[https://docs.google.com/document/d/1OSyQvOIfyUtYk3KAD0R-noWovnBABhcwawFVF9Iy1dA/edit?usp=sharing](https://docs.google.com/document/d/1OSyQvOIfyUtYk3KAD0R-noWovnBABhcwawFVF9Iy1dA/edit?usp=sharing)
+[https://docs.yellow.ai/docs/platform_concepts/inbox/mobilesdk/cordova/](https://docs.yellow.ai/docs/platform_concepts/inbox/mobilesdk/cordova/)
 
 ## Demo App
 
