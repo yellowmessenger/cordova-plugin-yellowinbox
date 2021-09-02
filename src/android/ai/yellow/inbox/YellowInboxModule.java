@@ -4,16 +4,12 @@ import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 
-import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ProcessLifecycleOwner;
 
 import com.yellowmessenger.YellowInbox;
 import com.yellowmessenger.YmAppProcessLifeCycleListener;
-import com.yellowmessenger.datalayer.vo.AgentModel;
 import com.yellowmessenger.datalayer.vo.Resource;
-import com.yellowmessenger.datalayer.vo.Roles;
-import com.yellowmessenger.datalayer.vo.User;
 import com.yellowmessenger.ui.vo.YmAgentStatus;
 
 import org.apache.cordova.CallbackContext;
@@ -22,11 +18,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import ai.yellow.inbox.utils.Utils;
-
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
+
+import ai.yellow.inbox.utils.Utils;
 
 /**
  * This class echoes a string called from JavaScript.
@@ -106,14 +100,24 @@ public class YellowInboxModule extends CordovaPlugin {
 
           ProcessLifecycleOwner.get().getLifecycle().addObserver(new YmAppProcessLifeCycleListener());
 
-          final Observer<? super Resource<Void>> observer = new Observer<Resource<Void>>() {
-            @Override
-            public void onChanged(Resource<Void> resource) {
-              Utils.genericSuccessHelper(callbackContext);
-            }
-          };
-
-          YellowInbox.init(ionicContext, apiKey, userId, botId).observe(ProcessLifecycleOwner.get(), observer);
+          YellowInbox.init(ionicContext, apiKey, userId, botId).observe(ProcessLifecycleOwner.get(),
+              new Observer<Resource<Void>>() {
+                @Override
+                public void onChanged(Resource<Void> resource) {
+                  switch (resource.getStatus()) {
+                    case SUCCESS:
+                      Log.i("YMLog", "success");
+                      Utils.genericSuccessHelper(callbackContext);
+                      break;
+                    case ERROR:
+                      Log.i("YMLog", "error");
+                      Utils.sdkErrorHelper(resource.getMessage(), callbackContext);
+                      break;
+                    case LOADING:
+                      break;
+                  }
+                }
+              });
 
         } catch (Exception e) {
           Utils.genericErrorHelper(e, callbackContext);

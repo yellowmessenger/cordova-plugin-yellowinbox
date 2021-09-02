@@ -16,3 +16,6 @@ Thumbs.db
 node_modules
 xcuserdata
 package-lock.json
+
+*.idea
+android.iml
