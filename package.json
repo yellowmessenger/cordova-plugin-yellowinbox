@@ -1,6 +1,6 @@
 {
   "name": "cordova-plugin-yellowinbox",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "Cordova plugin to integrate with yellow.ai inbox sdk",
   "cordova": {
     "id": "cordova-plugin-yellowinbox",
