@@ -80,8 +80,27 @@ public class YellowInboxModule extends CordovaPlugin {
         startMyChatActivity(args, callbackContext);
         return true;
       }
+      case "getAllAgentStatus": {
+        getAllAgentStatus(args, callbackContext);
+        return true;
+      }
     }
     return false;
+  }
+
+  private void getAllAgentStatus(JSONArray args, CallbackContext callbackContext) {
+    ionicActivity.runOnUiThread(new Runnable() {
+      @Override
+      public void run() {
+        try {
+          callbackContext.success(Utils.dataClassToJSONArray(YellowInbox.getAllAgentStatus()));
+        } catch (Exception e) {
+
+          Utils.genericErrorHelper(e, callbackContext);
+
+        }
+      }
+    });
   }
 
   private void initialize(JSONArray args, CallbackContext callbackContext) {
@@ -157,23 +176,10 @@ public class YellowInboxModule extends CordovaPlugin {
       @Override
       public void run() {
         try {
+          JSONObject ymAgentStatusJSON = args.getJSONObject(0);
+          YmAgentStatus ymAgentStatus = Utils.gson.fromJson(ymAgentStatusJSON.toString(), YmAgentStatus.class);
 
-          String status = args.getString(0);
-          YmAgentStatus statusToChange = YmAgentStatus.UNKNOWN;
-          switch (status) {
-            case "AVAILABLE":
-              statusToChange = YmAgentStatus.AVAILABLE;
-              break;
-            case "AWAY":
-              statusToChange = YmAgentStatus.AWAY;
-              break;
-            case "DND":
-            case "BUSY":
-              statusToChange = YmAgentStatus.BUSY;
-              break;
-          }
-
-          YellowInbox.setAgentStatus(statusToChange).observe(ProcessLifecycleOwner.get(),
+          YellowInbox.setAgentStatus(ymAgentStatus).observe(ProcessLifecycleOwner.get(),
               new Observer<Resource<Void>>() {
                 @Override
                 public void onChanged(Resource<Void> resource) {
@@ -211,7 +217,7 @@ public class YellowInboxModule extends CordovaPlugin {
 
               switch (ymAgentStatusResource.getStatus()) {
                 case SUCCESS:
-                  callbackContext.success(ymAgentStatusResource.getData().toString());
+                  callbackContext.success(Utils.dataClassToJSONObject(ymAgentStatusResource.getData()));
                   break;
                 case ERROR:
                   Utils.sdkErrorHelper(ymAgentStatusResource.getMessage(), callbackContext);

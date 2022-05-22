@@ -30,6 +30,10 @@ const YellowInbox =
         exec(success, failure, 'YellowInbox', 'getAgentStatus', []);
     },
 
+    getAllAgentStatus: (success, failure) => {
+        exec(success, failure, 'YellowInbox', 'getAllAgentStatus', []);
+    },
+
     logout: (success, failure) => {
         exec(success, failure, 'YellowInbox', 'logout', []);
     },
@@ -41,13 +45,6 @@ const YellowInbox =
     showMyChatScreen: (success, failure) => {
         exec(success, failure, 'YellowInbox', 'showMyChatScreen', []);
     },
-
-    AgentStatus: {
-        AVAILABLE: "AVAILABLE",
-        BUSY: "BUSY",
-        AWAY: "AWAY",
-        UNKNOWN: "UNKNOWN"
-    }
 }
 
 module.exports = YellowInbox
