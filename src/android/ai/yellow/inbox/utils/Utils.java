@@ -5,8 +5,10 @@ import android.util.Log;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.yellowmessenger.datalayer.vo.AgentModel;
+import com.yellowmessenger.ui.vo.YmAgentStatus;
 
 import org.apache.cordova.CallbackContext;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.lang.reflect.Type;
@@ -18,12 +20,39 @@ public class Utils {
 
   public static String TicketCreateEvent = "TicketCreateEvent";
   public static String TicketUpdateEvent = "TicketUpdateEvent";
+  public static String Status = "status";
+  public static String ParentStatus = "parentStatus";
+  public static String StatusId = "statusId";
+  public static String TAG = "YellowAI";
 
   public static Type mapStringObjectType = new TypeToken<Map<String, Object>>() {
   }.getType();
 
   public static Type listAgentModelType = new TypeToken<List<AgentModel>>() {
   }.getType();
+
+  public static Type ymAgentStatusModelType = new TypeToken<List<YmAgentStatus>>() {
+  }.getType();
+
+  public static <T> JSONObject dataClassToJSONObject(T data) {
+    String stringObj = gson.toJson(data, new TypeToken<T>() {
+    }.getType());
+    try {
+      return new JSONObject(stringObj);
+    } catch (Exception e) {
+      return new JSONObject();
+    }
+  }
+
+  public static <T> JSONArray dataClassToJSONArray(T data) {
+    String stringObj = gson.toJson(data, new TypeToken<T>() {
+    }.getType());
+    try {
+      return new JSONArray(stringObj);
+    } catch (Exception e) {
+      return new JSONArray();
+    }
+  }
 
   public static void genericErrorHelper(Exception exception, CallbackContext callbackContext) {
     Log.e("YmLog", "Failure", exception);
