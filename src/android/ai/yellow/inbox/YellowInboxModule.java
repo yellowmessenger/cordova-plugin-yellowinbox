@@ -250,7 +250,21 @@ public class YellowInboxModule extends CordovaPlugin {
       public void run() {
         try {
 
-          YellowInbox.logout();
+          YellowInbox.logout().observe(ProcessLifecycleOwner.get(), new Observer<Resource<Void>>() {
+            @Override
+            public void onChanged(Resource<Void> resource) {
+              switch (resource.getStatus()) {
+                case SUCCESS:
+                  callbackContext.success();
+                  break;
+                case ERROR:
+                  Utils.sdkErrorHelper(resource.getMessage(), callbackContext);
+                  break;
+                case LOADING:
+                  break;
+              }
+            }
+          });
           Utils.genericSuccessHelper(callbackContext);
 
         } catch (Exception e) {
